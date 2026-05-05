@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZestyOP — Join the Waitlist</title>
+  <meta name="description" content="ZestyOP is where your influence earns. Post, connect, and get rewarded — all onchain." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="logo">Zesty<span>OP</span></div>
+    <div class="badge">SocialFi · Web3</div>
+  </nav>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      Early Access Opening Soon
+    </div>
+
+    <h1 class="headline">Social meets <em>onchain</em>.</h1>
+    <p class="sub">ZestyOP is where your influence earns. Post, connect, and get rewarded — all in one place.</p>
+
+    <!-- LOADING -->
+    <div id="loading-screen">
+      <div class="loader"></div>
+    </div>
+
+    <!-- FORM CARD -->
+    <div id="form-card" class="card" style="display:none;">
+      <div class="counter">
+        <span class="dot-dark"></span>
+        <span><strong id="counter-num">—</strong> people already on the list</span>
+      </div>
+
+      <div id="ref-banner" class="ref-banner" style="display:none;">
+        👋 You were invited by a ZestyOP member — you'll get priority access!
+      </div>
+
+      <!-- Google Sign-In Button -->
+      <button class="btn-google" id="google-btn" onclick="handleGoogleSignIn()">
+        <svg width="18" height="18" viewBox="0 0 48 48">
+          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 19.001 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C42.021 35.556 44 30.038 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="divider-row">
+        <span class="divider-line"></span>
+        <span class="divider-text">or fill in manually</span>
+        <span class="divider-line"></span>
+      </div>
+
+      <div class="field">
+        <label for="email-input">Email address</label>
+        <input type="email" id="email-input" placeholder="you@example.com" />
+        <p class="error-msg" id="email-error"></p>
+      </div>
+
+      <div class="field">
+        <label for="twitter-input">Twitter / X handle</label>
+        <input type="text" id="twitter-input" placeholder="@yourhandle" />
+        <p class="error-msg" id="twitter-error"></p>
+      </div>
+
+      <button class="btn" id="submit-btn" onclick="handleSubmit()">
+        Join the Waitlist →
+      </button>
+
+      <p class="error-msg" id="submit-error" style="text-align:center; margin-top:10px;"></p>
+      <p class="fine-print">No spam. Early access when we launch. Referrals move you up the list.</p>
+    </div>
+
+    <!-- SUCCESS CARD -->
+    <div id="success-card" class="success-card" style="display:none;">
+      <div class="check-icon">✓</div>
+      <div class="success-title">You're on the list.</div>
+      <p class="success-sub">
+        Welcome, <strong id="success-twitter"></strong>. Share your link below — every referral moves you <strong>10 spots</strong> closer to the front.
+      </p>
+
+      <div class="position-box">
+        <div>
+          <div class="pos-label">Your position</div>
+          <div class="pos-num" id="success-position">—</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="pos-label">Referrals</div>
+          <div class="pos-num" id="success-referrals">0</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="ref-title">Your referral link — share this 👇</div>
+      <div class="ref-box" id="referral-link-box">—</div>
+
+      <div class="btn-row">
+        <button class="btn-copy" id="copy-btn" onclick="copyLink()">Copy link</button>
+        <button class="btn-twitter" onclick="shareOnTwitter()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/>
+          </svg>
+          Post on X
+        </button>
+      </div>
+
+      <div class="ref-stat">Each referral moves you up <strong>10 spots</strong>. Keep sharing!</div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    © 2025 ZestyOP · Built for the onchain generation
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
